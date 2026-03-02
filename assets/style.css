@@ -195,13 +195,46 @@ body.modal-open {
   display: flex;
 }
 
+#image-modal-card {
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 1.25rem 1.25rem 1.4rem;
+  max-width: min(92vw, 1100px);
+  max-height: 92vh;
+  box-sizing: border-box;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
+}
+
 #image-modal img {
-  max-width: min(96vw, 1400px);
-  max-height: 96vh;
+  max-width: min(84vw, 1000px);
+  max-height: 72vh;
   width: auto;
   height: auto;
-  border-radius: 10px;
+  border-radius: 2px;
   display: block;
+}
+
+#image-modal-note {
+  margin: 0.9rem 0 0;
+  font-family: "Syne", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  line-height: 1.35;
+  color: #111;
+  text-align: center;
+  min-height: 1.2em;
+}
+
+@media (max-width: 700px) {
+  #image-modal-card {
+    padding: 0.8rem 0.8rem 1rem;
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+
+  #image-modal img {
+    max-width: 89vw;
+    max-height: 68vh;
+  }
 }
 
 .lefty {

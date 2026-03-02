@@ -19,6 +19,16 @@ function alignClass(alignment) {
   return "centered";
 }
 
+function normalizeImageItem(imageItem) {
+  if (typeof imageItem === "string") {
+    return { src: imageItem, note: "" };
+  }
+  if (imageItem && typeof imageItem === "object" && imageItem.src) {
+    return { src: imageItem.src, note: imageItem.note || "" };
+  }
+  return { src: "", note: "" };
+}
+
 function createImageModal() {
   var modal = document.createElement("div");
   modal.id = "image-modal";
@@ -26,21 +36,32 @@ function createImageModal() {
   modal.setAttribute("aria-modal", "true");
   modal.setAttribute("aria-label", "Fullscreen image viewer");
 
+  var card = document.createElement("div");
+  card.id = "image-modal-card";
+
   var image = document.createElement("img");
   image.id = "image-modal-img";
   image.alt = "";
-  modal.appendChild(image);
+  card.appendChild(image);
+
+  var note = document.createElement("p");
+  note.id = "image-modal-note";
+  card.appendChild(note);
+
+  modal.appendChild(card);
 
   function closeModal() {
     modal.classList.remove("is-open");
     document.body.classList.remove("modal-open");
     image.src = "";
     image.alt = "";
+    note.textContent = "";
   }
 
-  function openModal(src, alt) {
+  function openModal(src, alt, imageNote) {
     image.src = src;
     image.alt = alt || "Fullscreen image";
+    note.textContent = imageNote || "";
     modal.classList.add("is-open");
     document.body.classList.add("modal-open");
   }
@@ -142,14 +163,17 @@ config.chapters.forEach(function (record, idx) {
   if (Array.isArray(record.images) && record.images.length) {
     var gallery = document.createElement("div");
     gallery.className = "chapter-gallery";
-    record.images.forEach(function (imageUrl, imageIndex) {
+    record.images.forEach(function (imageItem, imageIndex) {
+      var normalizedImage = normalizeImageItem(imageItem);
+      if (!normalizedImage.src) return;
       var figure = document.createElement("figure");
       figure.className = "chapter-gallery-item";
 
       var galleryImage = document.createElement("img");
-      galleryImage.src = imageUrl;
+      galleryImage.src = normalizedImage.src;
       galleryImage.alt = (record.title || record.id) + " photo " + (imageIndex + 1);
       galleryImage.loading = "lazy";
+      galleryImage.dataset.note = normalizedImage.note;
       figure.appendChild(galleryImage);
 
       gallery.appendChild(figure);
@@ -157,9 +181,11 @@ config.chapters.forEach(function (record, idx) {
     enableGalleryDrag(gallery);
     container.appendChild(gallery);
   } else if (record.image) {
+    var singleImage = normalizeImageItem(record.image);
     var image = document.createElement("img");
-    image.src = record.image;
+    image.src = singleImage.src;
     image.alt = record.title || record.id;
+    image.dataset.note = singleImage.note || record.imageNote || "";
     container.appendChild(image);
   }
 
@@ -177,7 +203,7 @@ var imageModal = createImageModal();
 Array.prototype.forEach.call(features.querySelectorAll("img"), function (img) {
   img.classList.add("zoomable-image");
   img.addEventListener("click", function () {
-    imageModal.openModal(img.src, img.alt);
+    imageModal.openModal(img.src, img.alt, img.dataset.note || "");
   });
 });
 

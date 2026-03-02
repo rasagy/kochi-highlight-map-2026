@@ -37,10 +37,22 @@ var config = {
       hidden: false,
       title: "Fort Kochi Aspinwall",
       images: [
-        "assets/images/C1_Kochi_1.JPG",
-        "assets/images/C1_Kochi_2.JPG",
-        "assets/images/C1_Kochi_3.JPG",
-        "assets/images/C1_Kochi_4.JPG"
+        {
+          src: "assets/images/C1_Kochi_1.JPG",
+          note: "Aspinwall courtyard mood at the start of my walk."
+        },
+        {
+          src: "assets/images/C1_Kochi_2.JPG",
+          note: "Details in this installation kept me standing for a long time."
+        },
+        {
+          src: "assets/images/C1_Kochi_3.JPG",
+          note: "One of my favorite visual moments from chapter 1."
+        },
+        {
+          src: "assets/images/C1_Kochi_4.JPG",
+          note: "Lighting and space design felt especially memorable here."
+        }
       ],
       description:
         "Aspinwall in Fort Kochi is one of my favorite Biennale spaces. This chapter zooms in to the venue where several standout pieces left a strong impression.",
@@ -62,8 +74,14 @@ var config = {
       hidden: false,
       title: "Artwork Placeholder 1",
       images: [
-        "assets/images/C2_Kochi_1.JPG",
-        "assets/images/C2_Kochi_2.JPG"
+        {
+          src: "assets/images/C2_Kochi_1.JPG",
+          note: "Chapter 2 note: first perspective of this artwork."
+        },
+        {
+          src: "assets/images/C2_Kochi_2.JPG",
+          note: "Chapter 2 note: alternate angle with stronger contrast."
+        }
       ],
       description:
         "Replace this with an artwork title and why you loved it. Keep the same chapter format for easy copy/paste additions.",
