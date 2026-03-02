@@ -56,9 +56,12 @@ function createImageModal() {
     image.src = "";
     image.alt = "";
     note.textContent = "";
+    card.style.removeProperty("--polaroid-tilt");
   }
 
   function openModal(src, alt, imageNote) {
+    var tilt = (Math.random() * 10 - 5).toFixed(2) + "deg";
+    card.style.setProperty("--polaroid-tilt", tilt);
     image.src = src;
     image.alt = alt || "Fullscreen image";
     note.textContent = imageNote || "";

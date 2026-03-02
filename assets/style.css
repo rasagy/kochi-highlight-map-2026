@@ -185,7 +185,8 @@ body.modal-open {
   display: none;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(242, 238, 230, 0.86);
+  backdrop-filter: blur(3px);
   padding: 1rem;
   box-sizing: border-box;
   cursor: zoom-out;
@@ -197,12 +198,16 @@ body.modal-open {
 
 #image-modal-card {
   background: #ffffff;
-  border-radius: 6px;
-  padding: 1.25rem 1.25rem 1.4rem;
+  border-radius: 4px;
+  padding: 1.25rem 1.25rem 1.6rem;
   max-width: min(92vw, 1100px);
   max-height: 92vh;
   box-sizing: border-box;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
+  transform: rotate(var(--polaroid-tilt, -0.4deg));
+  box-shadow:
+    0 26px 45px rgba(35, 25, 18, 0.28),
+    0 10px 14px rgba(35, 25, 18, 0.2),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 #image-modal img {
