@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Syne", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 h1,
@@ -92,6 +93,7 @@ h6 {
 
 .step {
   width: min(720px, calc(100vw - 2rem));
+  box-sizing: border-box;
   margin: 0 auto 45vh;
   padding: 1.2rem 1.1rem;
   border-radius: 8px;
@@ -121,10 +123,12 @@ h6 {
 
 .chapter-gallery {
   display: flex;
-  gap: 0.65rem;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 10px;
   overflow-x: auto;
   overflow-y: hidden;
-  padding-bottom: 0.35rem;
+  padding-bottom: 0.2rem;
   margin-bottom: 0.8rem;
   scroll-snap-type: x mandatory;
   cursor: grab;
@@ -136,14 +140,16 @@ h6 {
 }
 
 .chapter-gallery-item {
-  flex: 0 0 min(86%, 540px);
+  flex: 0 0 min(88%, 400px);
+  max-width: 400px;
   margin: 0;
   scroll-snap-align: start;
 }
 
 .chapter-gallery-item img {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   max-height: 600px;
   height: auto;
   object-fit: contain;
