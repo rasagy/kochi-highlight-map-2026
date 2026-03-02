@@ -2,7 +2,18 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: "Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Syne", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Monoton", "Syne", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 #map {
@@ -10,6 +21,23 @@ body {
   top: 0;
   bottom: 0;
   width: 100%;
+  background: #dfe8f3;
+}
+
+#map-error {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  max-width: min(920px, calc(100vw - 2rem));
+  background: #7f1d1d;
+  color: #fff;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  padding: 0.65rem 0.9rem;
+  border-radius: 6px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
 }
 
 #story {
@@ -85,8 +113,53 @@ body {
 
 .step img {
   width: 100%;
+  max-height: 600px;
+  object-fit: contain;
   border-radius: 6px;
   margin-bottom: 0.8rem;
+}
+
+.chapter-gallery {
+  display: flex;
+  gap: 0.65rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.8rem;
+  scroll-snap-type: x mandatory;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chapter-gallery.is-dragging {
+  cursor: grabbing;
+}
+
+.chapter-gallery-item {
+  flex: 0 0 min(86%, 540px);
+  margin: 0;
+  scroll-snap-align: start;
+}
+
+.chapter-gallery-item img {
+  display: block;
+  width: 100%;
+  max-height: 600px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  margin: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.chapter-gallery::-webkit-scrollbar {
+  height: 7px;
+}
+
+.chapter-gallery::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
 }
 
 .lefty {
