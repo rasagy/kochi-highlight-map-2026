@@ -19,13 +19,53 @@ function alignClass(alignment) {
   return "centered";
 }
 
+function createImageModal() {
+  var modal = document.createElement("div");
+  modal.id = "image-modal";
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-label", "Fullscreen image viewer");
+
+  var image = document.createElement("img");
+  image.id = "image-modal-img";
+  image.alt = "";
+  modal.appendChild(image);
+
+  function closeModal() {
+    modal.classList.remove("is-open");
+    document.body.classList.remove("modal-open");
+    image.src = "";
+    image.alt = "";
+  }
+
+  function openModal(src, alt) {
+    image.src = src;
+    image.alt = alt || "Fullscreen image";
+    modal.classList.add("is-open");
+    document.body.classList.add("modal-open");
+  }
+
+  modal.addEventListener("click", closeModal);
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && modal.classList.contains("is-open")) {
+      closeModal();
+    }
+  });
+
+  document.body.appendChild(modal);
+
+  return { openModal: openModal, closeModal: closeModal };
+}
+
 function enableGalleryDrag(gallery) {
   var isDown = false;
   var startX = 0;
   var scrollLeft = 0;
+  var dragged = false;
 
   gallery.addEventListener("mousedown", function (event) {
     isDown = true;
+    dragged = false;
     gallery.classList.add("is-dragging");
     startX = event.pageX - gallery.offsetLeft;
     scrollLeft = gallery.scrollLeft;
@@ -45,9 +85,21 @@ function enableGalleryDrag(gallery) {
     if (!isDown) return;
     event.preventDefault();
     var x = event.pageX - gallery.offsetLeft;
+    if (Math.abs(x - startX) > 6) dragged = true;
     var walk = (x - startX) * 1.2;
     gallery.scrollLeft = scrollLeft - walk;
   });
+
+  gallery.addEventListener(
+    "click",
+    function (event) {
+      if (!dragged) return;
+      event.preventDefault();
+      event.stopPropagation();
+      dragged = false;
+    },
+    true
+  );
 }
 
 var story = document.getElementById("story");
@@ -119,6 +171,14 @@ config.chapters.forEach(function (record, idx) {
 
   if (record.hidden) container.style.visibility = "hidden";
   features.appendChild(container);
+});
+
+var imageModal = createImageModal();
+Array.prototype.forEach.call(features.querySelectorAll("img"), function (img) {
+  img.classList.add("zoomable-image");
+  img.addEventListener("click", function () {
+    imageModal.openModal(img.src, img.alt);
+  });
 });
 
 if (config.footer) {
